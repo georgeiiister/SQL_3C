@@ -1,0 +1,62 @@
+/*è‡†¢† ≠† Ì‚†Ø*/
+INSERT INTO T22(
+                T22PCOD,
+                T22PBST,
+                T22SCOD,
+                T22SBST,
+                T22_ARH
+               )                  
+SELECT 
+      (
+       SELECT
+              T25EMID 
+       FROM 
+            T25 
+       WHERE 
+            T25NAME='[àåü_êéãà]' 
+      ),
+      110, /*‡Æ´Ï*/
+      (
+       SELECT 
+             T12PHTP
+       FROM 
+             T12 
+       WHERE 
+             T12PHNM='[àåü_íàèéÇéÉé_ùíÄèÄ]'
+      ),
+       103, /*Ñ´Ô Ì‚†Ø†*/
+       0
+FROM 
+     dual
+WHERE
+     NOT EXISTS (
+                 SELECT 
+                        * 
+                 FROM 
+                      T22 
+                 WHERE
+                      T22PCOD=(
+                               SELECT
+                                     T25EMID 
+                               FROM 
+                                      T25 
+                               WHERE 
+                                      T25NAME='[àåü_êéãà]' 
+                               )
+                                AND
+                       T22PBST=110
+                                AND
+                       T22SCOD=(
+                                SELECT 
+                                      T12PHTP
+                                FROM 
+                                      T12 
+                                WHERE 
+                                      T12PHNM='[àåü_íàèéÇéÉé_ùíÄèÄ]'         
+                                )
+                                AND
+                        T22SBST=103
+                                AND
+                        T22_ARH=0         
+                 );
+COMMIT;
